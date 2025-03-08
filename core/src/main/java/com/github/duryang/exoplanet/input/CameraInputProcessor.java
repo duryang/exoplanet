@@ -1,56 +1,51 @@
 package com.github.duryang.exoplanet.input;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.github.duryang.exoplanet.CameraController;
 
-public class PlayerInputHandler implements InputProcessor {
+public class CameraInputProcessor implements InputProcessor {
 
     private final CameraController cameraController;
 
-    public PlayerInputHandler(CameraController cameraController) {
+    public CameraInputProcessor(CameraController cameraController) {
         this.cameraController = cameraController;
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode == KeyBindings.MOVE_CAMERA_RIGHT) {
-            cameraController.setMoveRight(true);
-        }
-
-        if (keycode == KeyBindings.MOVE_CAMERA_LEFT) {
-            cameraController.setMoveLeft(true);
-        }
-
-        if (keycode == KeyBindings.MOVE_CAMERA_UP) {
-            cameraController.setMoveUp(true);
-        }
-
-        if (keycode == KeyBindings.MOVE_CAMERA_DOWN) {
-            cameraController.setMoveDown(true);
-        }
-
-        return true;
+        return keyAction(keycode, true);
     }
 
     @Override
     public boolean keyUp(int keycode) {
+        return keyAction(keycode, false);
+    }
+
+    private boolean keyAction(int keycode, boolean down) {
+        boolean processed = false;
+
         if (keycode == KeyBindings.MOVE_CAMERA_RIGHT) {
-            cameraController.setMoveRight(false);
+            cameraController.setMoveRight(down);
+            processed = true;
         }
 
         if (keycode == KeyBindings.MOVE_CAMERA_LEFT) {
-            cameraController.setMoveLeft(false);
+            cameraController.setMoveLeft(down);
+            processed = true;
         }
 
         if (keycode == KeyBindings.MOVE_CAMERA_UP) {
-            cameraController.setMoveUp(false);
+            cameraController.setMoveUp(down);
+            processed = true;
         }
 
         if (keycode == KeyBindings.MOVE_CAMERA_DOWN) {
-            cameraController.setMoveDown(false);
+            cameraController.setMoveDown(down);
+            processed = true;
         }
 
-        return true;
+        return processed;
     }
 
     @Override
@@ -60,11 +55,23 @@ public class PlayerInputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if (button == Input.Buttons.RIGHT) {
+            cameraController.getDrag().initiate(screenX, screenY);
+        }
+
         return false;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        if (button == Input.Buttons.RIGHT) {
+            boolean wasDragging = cameraController.getDrag().isDragging();
+            cameraController.getDrag().stop();
+
+            // don't handle it further if it stopped camera dragging
+            return wasDragging;
+        }
+
         return false;
     }
 

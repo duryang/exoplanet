@@ -1,6 +1,7 @@
 package com.github.duryang.exoplanet;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
@@ -14,7 +15,7 @@ import com.github.duryang.exoplanet.entity.Ship;
 import com.github.duryang.exoplanet.gamestate.Battle;
 import com.github.duryang.exoplanet.gamestate.BattleRenderer;
 import com.github.duryang.exoplanet.gamestate.DummyBattleBuilder;
-import com.github.duryang.exoplanet.input.PlayerInputHandler;
+import com.github.duryang.exoplanet.input.CameraInputProcessor;
 
 public class GameScreen implements Screen {
 
@@ -53,8 +54,12 @@ public class GameScreen implements Screen {
         camera.update();
 
         cameraController = new CameraController(camera, background.getWidth(), background.getHeight());
-        InputProcessor inputProcessor = new PlayerInputHandler(cameraController);
-        Gdx.input.setInputProcessor(inputProcessor);
+        InputProcessor cameraInputProcessor = new CameraInputProcessor(cameraController);
+
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(cameraInputProcessor);
+
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     @Override
