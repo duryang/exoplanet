@@ -1,4 +1,4 @@
-package com.github.duryang.exoplanet;
+package com.github.duryang.exoplanet.camera;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;

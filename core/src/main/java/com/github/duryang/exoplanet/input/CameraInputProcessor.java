@@ -2,7 +2,7 @@ package com.github.duryang.exoplanet.input;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.github.duryang.exoplanet.CameraController;
+import com.github.duryang.exoplanet.camera.CameraController;
 
 public class CameraInputProcessor implements InputProcessor {
 

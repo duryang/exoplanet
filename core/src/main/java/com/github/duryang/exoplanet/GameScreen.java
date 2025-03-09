@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.github.duryang.exoplanet.camera.CameraController;
 import com.github.duryang.exoplanet.command.MoveCommand;
 import com.github.duryang.exoplanet.entity.Ship;
 import com.github.duryang.exoplanet.gamestate.Battle;
