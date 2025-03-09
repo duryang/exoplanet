@@ -55,6 +55,10 @@ public class CameraInputProcessor implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if (button == Input.Buttons.MIDDLE) {
+            cameraController.resetZoom();
+        }
+
         if (button == Input.Buttons.RIGHT) {
             cameraController.getDrag().initiate(screenX, screenY);
         }
@@ -92,6 +96,12 @@ public class CameraInputProcessor implements InputProcessor {
 
     @Override
     public boolean scrolled(float amountX, float amountY) {
-        return false;
+        if (amountY < 0) {
+            cameraController.zoomIn();
+        } else {
+            cameraController.zoomOut();
+        }
+
+        return true;
     }
 }
